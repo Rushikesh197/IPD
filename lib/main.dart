@@ -6,11 +6,16 @@ import 'screens/FacultyLoginPage.dart';
 import 'screens/FacultySignupPage.dart';
 import 'screens/Settings.dart'; // Import the SettingsPage.dart file
 import 'screens/AboutPage.dart'; // Import the AboutPage.dart file
+import 'package:firebase_core/firebase_core.dart';
+import 'fire_options.dart';
 
 bool _darkThemeEnabled = true;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main() async{
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(), // Provide your ThemeProvider instance here
