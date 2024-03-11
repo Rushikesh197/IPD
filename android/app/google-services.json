@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "275871507664",
+    "project_id": "dj-live-4d9e0",
+    "storage_bucket": "dj-live-4d9e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275871507664:android:eeb2e85ad4fb349c6dead5",
+        "android_client_info": {
+          "package_name": "com.rushikeshgadewar.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275871507664-pksnpoef3ba1id5e1b46r9jdenjlhav9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVzgz7qrTFWljnw8KwGOjetP-ALK37xOg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275871507664-pksnpoef3ba1id5e1b46r9jdenjlhav9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
