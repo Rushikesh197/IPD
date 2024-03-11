@@ -5,8 +5,23 @@ import 'FacultySignupPage.dart';
 import 'FacultyHomePage.dart';
 
 class FacultyLoginPage extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> signInWithEmailAndPassword() async {
+    try {
+      await Auth().signInWithEmailAndPassword(
+        email: _controllerEmail.text,
+        passwoed: _controllerPassword.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message;
+      });
+
+    }
+  }
 
   FacultyLoginPage({super.key});
 
