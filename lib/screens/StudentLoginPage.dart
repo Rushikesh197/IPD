@@ -1,25 +1,25 @@
+import 'dart:js';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'StudentSignupPage.dart'; // Import the corresponding signup page
 import 'StudentHomePage.dart'; // Import the student home page
-
+//
 class StudentLoginPage extends StatelessWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future<void> signInWithEmailAndPassword() async {
-    try {
-      await Auth().signInWithEmailAndPassword(
-        email: _controllerEmail.text,
-        passwoed: _controllerPassword.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
+  // signIn()async{
+  //   await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+  // }
 
-    }
+  signIn() async{
+   await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+    
   }
+
+
 
   StudentLoginPage({super.key});
 
@@ -50,12 +50,17 @@ class StudentLoginPage extends StatelessWidget {
             const SizedBox(height: 16.0),
 
             ElevatedButton(
-              onPressed: () {
-                // Implement student login logic here
-                _performLogin(context);
-              },
+              onPressed: (()=>signIn()),
+              //   // Implement student login logic here
+              //   _performLogin(context);
               child: const Text('Login'),
             ),
+
+            // ElevatedButton(
+            //     onPressed: (()=>signIn()) => _performLogin(context), // Call the function correctly
+            //   child: const Text('Login'),
+            // ),
+
 
             const SizedBox(height: 16.0),
 
@@ -126,3 +131,7 @@ class StudentLoginPage extends StatelessWidget {
     );
   }
 }
+
+
+
+
