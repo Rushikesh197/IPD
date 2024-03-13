@@ -1,25 +1,16 @@
+
+// this id s
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class StudentSignupPage extends StatelessWidget {
   // Controllers for text fields
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future<void> createUserWithEmailAndPassword() async {
-    try {
-      await Auth().signInWithEmailAndPassword(
-        email: _controllerEmail.text,
-        passwoed: _controllerPassword.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
-
-    }
-  }
 
 
   StudentSignupPage({super.key});
@@ -122,6 +113,10 @@ class StudentSignupPage extends StatelessWidget {
     return RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value);
   }
 
+  signup()async{
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -151,10 +146,11 @@ class StudentSignupPage extends StatelessWidget {
             const SizedBox(height: 16.0),
 
             ElevatedButton(
-              onPressed: () {
-                // Implement student signup logic here
-                _performSignup(context);
-              },
+              onPressed: (()=>signup()) ,
+              //   {
+              //   // Implement student signup logic here
+              //   _performSignup(context);
+              // },
               child: const Text('Sign up'),
             ),
           ],
