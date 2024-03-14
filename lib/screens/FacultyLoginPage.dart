@@ -1,14 +1,22 @@
-// lib/screens/FacultyLoginPage.dart
 
+
+
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'FacultySignupPage.dart';
-import 'FacultyHomePage.dart';
+import 'FacultySignupPage.dart'; // Import the corresponding signup page
+import 'FacultyHomePage.dart'; // Import the Faculty home page
 
-class FacultyLoginPage extends StatelessWidget {
+class FacultyLoginPage extends StatefulWidget {
+  const FacultyLoginPage({super.key});
+
+  @override
+  State<FacultyLoginPage> createState() => _FacultyLoginPageState();
+}
+
+class _FacultyLoginPageState extends State<FacultyLoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  FacultyLoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +29,7 @@ class FacultyLoginPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // TextFields for email and password
             TextFormField(
               controller: _emailController,
               decoration: const InputDecoration(labelText: 'Email'),
@@ -30,14 +39,16 @@ class FacultyLoginPage extends StatelessWidget {
               decoration: const InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
+
             const SizedBox(height: 16.0),
+
             ElevatedButton(
-              onPressed: () {
-                _performLogin(context);
-              },
+              onPressed: _signInWithEmailAndPassword,
               child: const Text('Login'),
             ),
+
             const SizedBox(height: 16.0),
+
             TextButton(
               onPressed: () {
                 Navigator.push(
@@ -53,41 +64,53 @@ class FacultyLoginPage extends StatelessWidget {
     );
   }
 
-  void _performLogin(BuildContext context) {
-    // Hardcoded email and password for demonstration
-    String hardcodedEmail = 'faculty@gmail.com';
-    String hardcodedPassword = 'faculty';
+  Future<void> _signInWithEmailAndPassword() async {
+    try {
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
 
-    String enteredEmail = _emailController.text.trim();
-    String enteredPassword = _passwordController.text.trim();
+      if (email.isEmpty || password.isEmpty) {
+        _showAlertDialog(context, 'Fields cannot be empty.');
+        return;
+      }
 
-    if (enteredEmail.isEmpty || enteredPassword.isEmpty) {
-      _showAlertDialog(context, 'Fields cannot be empty.');
-      return;
+      if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(email)) {
+        _showAlertDialog(context, 'Invalid email format.');
+        return;
+      }
+
+      // Perform Firebase authentication
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Navigate to Faculty home page on successful login
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const FacultyHomePage(facultyName: 'Faculty'), // Pass Faculty's name here
+        ),
+      );
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case 'user-not-found':
+          _showAlertDialog(context, 'User not found.');
+          break;
+        case 'wrong-password':
+          _showAlertDialog(context, 'Incorrect password.');
+          break;
+        case 'invalid-email':
+          _showAlertDialog(context, 'Invalid email format.');
+          break;
+        default:
+          _showAlertDialog(context, 'Login failed. Please try again.');
+      }
+    } catch (error) {
+      print('Login error: $error'); // Log unexpected errors
+      _showAlertDialog(context, 'An error occurred. Please try again.');
     }
-
-    if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(enteredEmail)) {
-      _showAlertDialog(context, 'Invalid email format.');
-      return;
-    }
-
-    if (enteredEmail != hardcodedEmail || enteredPassword != hardcodedPassword) {
-      _showAlertDialog(context, 'Incorrect email or password.');
-      return;
-    }
-
-    // Navigate to the faculty home page after successful login
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          // ignore: prefer_const_constructors
-          return FacultyHomePage(facultyName: 'Faculty');
-        }, // Pass faculty's name here
-      ),
-    );
   }
-
 
   void _showAlertDialog(BuildContext context, String message) {
     showDialog(
@@ -109,3 +132,4 @@ class FacultyLoginPage extends StatelessWidget {
     );
   }
 }
+
