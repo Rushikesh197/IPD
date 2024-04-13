@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
-import 'package:flutter/material.dart';
 
-
-// List of example first names and last names
-List<String> firstNames = [
-  'John', 'Jane', 'David', 'Emily', 'Michael', 'Sophia', 'Robert', 'Emma', 'William', 'Olivia'
-];
-List<String> lastNames = [
-  'Smith', 'Johnson', 'Brown', 'Taylor', 'Anderson', 'Thomas', 'Jackson', 'White', 'Harris', 'Martin'
+// List of example names and locations
+List<String> facultyNames = [
+  'Vinaya Savant', 'Arjun Jaiswal', 'Abhijit Joshi', 'Neha Katre', 'Richa Sharma', 'Harshal Dalvi', 'Sharvari Patil', 'Savyasacchi Pandit', 'Monali Sankhe', 'Neha Ram'
 ];
 
-String generateRandomName(Random random) {
-  String firstName = firstNames[random.nextInt(firstNames.length)];
-  String lastName = lastNames[random.nextInt(lastNames.length)];
-  return '$firstName $lastName';
+// Map of faculty names to their respective locations
+Map<String, String> facultyLocations = {
+  'Vinaya Savant': 'IT DEPT 6th Floor HOD Cabin',
+  'Arjun Jaiswal': 'CSDS DEPT 5th Floor Cubicle 20',
+  'Abhijit Joshi': 'AIML DEPT 3rd Floor Cabin',
+  'Neha Katre': 'CS DEPT 6th Floor Cubicle 3',
+  'Richa Sharma': 'CSDS DEPT 5th Floor Cubicle 6',
+  'Harshal Dalvi': 'CSDS DEPT 5th Floor Cubicle 7',
+  'Sharvari Patil': 'CSDS DEPT 5th Floor Cubicle 8',
+  'Savyasacchi Pandit': 'Bio-Med DEPT 4th Floor Cubicle 5',
+  'Monali Sankhe': 'CSDS DEPT 5th Floor Cubicle 10',
+  'Neha Ram': 'CSDS DEPT 5th Floor Cubicle 13',
+};
+
+String generateRandomPhoneNumber(Random random) {
+  // Generate a random phone number with 10 digits
+  String phoneNumber = '';
+  for (int i = 0; i < 10; i++) {
+    phoneNumber += random.nextInt(10).toString();
+  }
+  return phoneNumber;
 }
-
 
 class FacultyStatus extends StatelessWidget {
   const FacultyStatus({Key? key}) : super(key: key);
@@ -30,19 +41,36 @@ class FacultyStatus extends StatelessWidget {
         title: Text('Faculty Status'),
       ),
       body: ListView.builder(
-        itemCount: 6, // Generate 6 dummy tiles
+        itemCount: facultyNames.length,
         itemBuilder: (context, index) {
-          // Generate random data for each tile
-          Random random = Random();
-          String facultyName = generateRandomName(random);
-          String designation = ['Professor', 'Associate Professor', 'Assistant Professor'][random.nextInt(3)];
-          String department = ['IT Department', 'Computer Science', 'Electrical Engineering'][random.nextInt(3)];
-          bool isAvailable = random.nextBool();
-          String phoneNumber = '1234567890';
-          String email = 'faculty${random.nextInt(100)}@example.com';
-          String location = 'Location ${random.nextInt(100)}';
-          TimeOfDay startTime = TimeOfDay(hour: random.nextInt(24), minute: random.nextInt(60));
-          TimeOfDay endTime = TimeOfDay(hour: random.nextInt(24), minute: random.nextInt(60));
+          // Retrieve specific data for each faculty member
+          String facultyName = facultyNames[index];
+          String designation = ['Professor', 'Associate Professor', 'Assistant Professor'][Random().nextInt(3)];
+          String department = ['IT Department', 'CS Department', 'CS-DS Department'][Random().nextInt(3)];
+          bool isAvailable = Random().nextBool();
+          String phoneNumber = generateRandomPhoneNumber(Random());
+          String email = '${facultyName.toLowerCase().replaceAll(' ', '')}@svkm.djsce.com'; // Generate email ID
+          String location = facultyLocations[facultyName] ?? 'Location not specified'; // Retrieve location from the map
+
+          // Generate random start time between 7:30 AM and 5:30 PM
+          int startHour = 7 + Random().nextInt(11); // Random hour between 7 and 17 (5 PM)
+          int startMinute = Random().nextInt(31); // Random minute between 0 and 30
+          TimeOfDay startTime = TimeOfDay(hour: startHour, minute: startMinute);
+
+          // Generate random end time between start time and 5:30 PM
+          int endHour = startHour + 1 + Random().nextInt(11); // Random hour between startHour + 1 and 17 (5 PM)
+          int endMinute = 30 + Random().nextInt(31); // Random minute between 30 and 59
+          if (endHour == 17) {
+            // If the end time reaches 5 PM, adjust the minute to be between 0 and 29
+            endMinute = Random().nextInt(30);
+          }
+          TimeOfDay endTime = TimeOfDay(hour: endHour, minute: endMinute);
+
+          // Convert start time to 12-hour format
+          String formattedStartTime = DateFormat('h:mm a').format(DateTime(2024, 4, 13, startTime.hour, startTime.minute));
+
+          // Convert end time to 12-hour format
+          String formattedEndTime = DateFormat('h:mm a').format(DateTime(2024, 4, 13, endTime.hour, endTime.minute));
 
           return FacultyStatusTile(
             facultyName: facultyName,
@@ -59,7 +87,6 @@ class FacultyStatus extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class FacultyStatusTile extends StatelessWidget {

@@ -17,12 +17,12 @@ class NoticePage extends StatelessWidget {
             // Notices Section
             _buildSectionHeader('Notices'),
             _buildNoticeItem(
-              title: 'Postponement Of Exam',
-              description: 'This is an important notice regarding postponement of Maths Exam.',
+              title: 'IPD Presentations',
+              description: 'Important notice regarding IPD Presentations scheduled on 15th April 2024.',
             ),
             _buildNoticeItem(
-              title: 'Holiday On 22/02/2024',
-              description: 'Holiday is declared on 22nd Feb 2024, Thursday.',
+              title: 'Holiday On 17th April 2024',
+              description: 'Holiday is declared on 17th April, Wednesday on occasion of Ram Navmi',
             ),
             // Notifications Section
             _buildSectionHeader('Notifications'),
@@ -37,12 +37,12 @@ class NoticePage extends StatelessWidget {
             // Announcements Section
             _buildSectionHeader('Announcements'),
             _buildAnnouncementItem(
-              title: 'Welcome to the New Semester!',
-              description: 'We are excited to start the new semester.',
+              title: 'ZS Associates Campus Visit, 16th April 2024',
+              description: 'ZS Associates will be visiting campus for Campus Beats Orientation.',
             ),
             _buildAnnouncementItem(
               title: 'Upcoming Event',
-              description: 'Join us for the annual Alumni fair on 24th Feb 2024.',
+              description: 'Term Test 2 Starts from 22nd April 2024, All The Best !',
             ),
           ],
         ),

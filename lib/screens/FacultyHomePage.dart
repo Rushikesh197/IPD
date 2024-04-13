@@ -171,19 +171,15 @@ class FacultyHomePage extends StatelessWidget {
                             child: ListView(
                               children: const [
                                 ListTile(
-                                  title: Text('Power Electronics'),
+                                  title: Text('Data Structures and Algorithms'),
                                   subtitle: Text('Time: 7:00 AM - 8:00 AM, Classroom: 45'),
                                 ),
                                 ListTile(
-                                  title: Text('Random Signals'),
-                                  subtitle: Text('Time: 8:00 AM - 9:00 AM, Classroom: 33'),
+                                  title: Text('Devops Lab'),
+                                  subtitle: Text('Time: 8:00 AM - 10:00 AM, Classroom: Lab 2'),
                                 ),
                                 ListTile(
-                                  title: Text('Radio Technology'),
-                                  subtitle: Text('Time: 9:00 AM - 10:00 AM, Classroom: 63'),
-                                ),
-                                ListTile(
-                                  title: Text('Embedded Electronics'),
+                                  title: Text('Artificial Intelligence'),
                                   subtitle: Text('Time: 10:00 AM - 11:00 AM, Classroom: 65'),
                                 ),
                                 ListTile(
@@ -191,24 +187,24 @@ class FacultyHomePage extends StatelessWidget {
                                   subtitle: Text('Time: 11:00 AM - 12:00 PM, Classroom: 66'),
                                 ),
                                 ListTile(
-                                  title: Text('Analog And Digital'),
+                                  title: Text('Software Engineering'),
                                   subtitle: Text('Time: 12:00 PM - 1:00 PM, Classroom: 55'),
                                 ),
                                 ListTile(
-                                  title: Text('High Voltage Electronics'),
-                                  subtitle: Text('Time: 1:00 PM - 2:00 PM, Classroom: 43'),
+                                  title: Text('Lunch Break'),
+                                  subtitle: Text('Time: 1:00 PM - 1:30 PM, Classroom: NULL'),
                                 ),
                                 ListTile(
-                                  title: Text('Antenna Technology '),
-                                  subtitle: Text('Time: 2:00 PM - 3:00 PM, Classroom: 33'),
+                                  title: Text('Big Data Analysis'),
+                                  subtitle: Text('Time: 1:30 PM - 2:30 PM, Classroom: 43'),
                                 ),
                                 ListTile(
-                                  title: Text('Remote Control'),
-                                  subtitle: Text('Time: 3:00 PM - 4:00 PM, Classroom: 62'),
+                                  title: Text('Statistical Analysis Lab'),
+                                  subtitle: Text('Time: 2:30 PM - 4:30 PM, Classroom: Lab 3'),
                                 ),
                                 ListTile(
-                                  title: Text('AR/VR'),
-                                  subtitle: Text('Time: 4:00 PM - 5:00 PM, Classroom: 35'),
+                                  title: Text('Advanced Data Structures'),
+                                  subtitle: Text('Time: 4:30 PM - 5:30 PM, Classroom: 35'),
                                 ),
                               ],
                             ),
@@ -246,9 +242,9 @@ class FacultyHomePage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              _navigateToChatRoom(context, 'Interview Tips');
+                              _navigateToChatRoom(context, 'IPD Groups');
                             },
-                            child: _buildStudyGroupTile('Interview Tips'),
+                            child: _buildStudyGroupTile('IPD Groups'),
                           ),
                         ],
                       ),

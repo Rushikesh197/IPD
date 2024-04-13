@@ -32,7 +32,7 @@ class AboutPage extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             Text(
-              'For any assistance or issues, please contact our IT department.',
+              'For any assistance or issues, please contact our IT department. Contact No. 9321975842',
               style: TextStyle(fontSize: 16.0),
             ),
             SizedBox(height: 32.0),

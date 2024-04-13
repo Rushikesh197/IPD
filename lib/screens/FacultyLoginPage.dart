@@ -55,8 +55,8 @@ class FacultyLoginPage extends StatelessWidget {
 
   void _performLogin(BuildContext context) {
     // Hardcoded email and password for demonstration
-    String hardcodedEmail = 'faculty@gmail.com';
-    String hardcodedPassword = 'faculty';
+    String hardcodedEmail = 'arjunjaiswal@gmail.com';
+    String hardcodedPassword = 'arjunj123\$';
 
     String enteredEmail = _emailController.text.trim();
     String enteredPassword = _passwordController.text.trim();

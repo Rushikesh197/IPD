@@ -289,56 +289,51 @@ class StudentHomePage extends StatelessWidget {
                             child: ListView(
                               children: const [
                                 ListTile(
-                                  title: Text('Power Electronics'),
+                                  title: Text('Parallel and Distributed Computing'),
                                   subtitle: Text(
-                                      'Time: 7:00 AM - 8:00 AM, Classroom: 45, Faculty: Prof. Tanaji Biradar'),
+                                      'Time: 7:00 AM - 8:00 AM, Classroom: 65,\nFaculty: Prof. Vinaya Savant'),
                                 ),
                                 ListTile(
                                   title: Text(
-                                      'Image Analysis And Computer Vision'),
+                                      'Software Engineering Lab'),
                                   subtitle: Text(
-                                      'Time: 8:00 AM - 9:00 AM, Classroom: 33, Faculty: Prof. Neha Katre'),
+                                      'Time: 8:00 AM - 10:00 AM, Classroom: Lab 3,\nFaculty: Prof. Richa Sharma'),
                                 ),
                                 ListTile(
-                                  title: Text('Big Data Analytics '),
+                                  title: Text('Image Analysis and Computer Vision'),
                                   subtitle: Text(
-                                      'Time: 9:00 AM - 10:00 AM, Classroom: 63, Faculty: Prof. Harshal Dalvi'),
+                                      'Time: 10:00 AM - 11:00 AM, Classroom: 64,\nFaculty: Prof. Neha Katre'),
                                 ),
                                 ListTile(
                                   title: Text(
-                                      'Parallel And Distrubuted Systems'),
+                                      'Big Data Analysis'),
                                   subtitle: Text(
-                                      'Time: 10:00 AM - 11:00 AM, Classroom: 65, Faculty: Prod. Vinaya Savant'),
+                                      'Time: 11:00 AM - 12:00 AM, Classroom: 65,\nFaculty: Prof. Harshal Dalvi'),
                                 ),
                                 ListTile(
-                                  title: Text('Soft Computing'),
+                                  title: Text('Lunch Break'),
                                   subtitle: Text(
-                                      'Time: 11:00 AM - 12:00 PM, Classroom: 66, Faculty: Prof. Savyasacchi Pandit'),
+                                      'Time: 12:00 AM - 12:30 PM, Classroom: NULL,\nFaculty: NULL'),
                                 ),
                                 ListTile(
-                                  title: Text('Devops'),
+                                  title: Text('Artificial Intelligence'),
                                   subtitle: Text(
-                                      'Time: 12:00 PM - 1:00 PM, Classroom: 55, Faculty: Prof. Monali Sankhe'),
+                                      'Time: 12:30 PM - 1:30 PM, Classroom: 65,\nFaculty: Prof. Prachi Tawde'),
                                 ),
                                 ListTile(
-                                  title: Text('Software Engineering'),
+                                  title: Text('Advanced Data Structures Lab'),
                                   subtitle: Text(
-                                      'Time: 1:00 PM - 2:00 PM, Classroom: 43, Faculty: Prof. Richa Sharma'),
+                                      'Time: 1:30 PM - 3:30 PM, Classroom: Lab 1,\nFaculty: Prof. Monika Mangla'),
                                 ),
                                 ListTile(
-                                  title: Text('Antenna Technology'),
+                                  title: Text('Cryptography and Network Security'),
                                   subtitle: Text(
-                                      'Time: 2:00 PM - 3:00 PM, Classroom: 33, Faculty: Prof. Amey Kadam'),
+                                      'Time: 3:30 PM - 4:30 PM, Classroom: 64,\nFaculty: Prof. Richa Sharma'),
                                 ),
                                 ListTile(
-                                  title: Text('Data Structures'),
+                                  title: Text('Statistical Analysis'),
                                   subtitle: Text(
-                                      'Time: 3:00 PM - 4:00 PM, Classroom: 62, Faculty: Prof. Stevina Diaz'),
-                                ),
-                                ListTile(
-                                  title: Text('AR/VR'),
-                                  subtitle: Text(
-                                      'Time: 4:00 PM - 5:00 PM, Classroom: 35, Faculty: Prof. Arjun Jaiswal'),
+                                      'Time: 4:30 PM - 5:30 PM, Classroom: 65,\nFaculty: Prof. Neha Katre'),
                                 ),
                               ],
                             ),
