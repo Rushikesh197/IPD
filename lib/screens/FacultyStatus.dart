@@ -1,27 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'dart:math';
-import 'package:flutter/material.dart';
-
-
-// List of example first names and last names
-List<String> firstNames = [
-  'John', 'Jane', 'David', 'Emily', 'Michael', 'Sophia', 'Robert', 'Emma', 'William', 'Olivia'
-];
-List<String> lastNames = [
-  'Smith', 'Johnson', 'Brown', 'Taylor', 'Anderson', 'Thomas', 'Jackson', 'White', 'Harris', 'Martin'
-];
-
-String generateRandomName(Random random) {
-  String firstName = firstNames[random.nextInt(firstNames.length)];
-  String lastName = lastNames[random.nextInt(lastNames.length)];
-  return '$firstName $lastName';
-}
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FacultyStatus extends StatelessWidget {
   const FacultyStatus({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,43 +11,83 @@ class FacultyStatus extends StatelessWidget {
       appBar: AppBar(
         title: Text('Faculty Status'),
       ),
-      body: ListView.builder(
-        itemCount: 6, // Generate 6 dummy tiles
-        itemBuilder: (context, index) {
-          // Generate random data for each tile
-          Random random = Random();
-          String facultyName = generateRandomName(random);
-          String designation = ['Professor', 'Associate Professor', 'Assistant Professor'][random.nextInt(3)];
-          String department = ['IT Department', 'Computer Science', 'Electrical Engineering'][random.nextInt(3)];
-          bool isAvailable = random.nextBool();
-          String phoneNumber = '1234567890';
-          String email = 'faculty${random.nextInt(100)}@example.com';
-          String location = 'Location ${random.nextInt(100)}';
-          TimeOfDay startTime = TimeOfDay(hour: random.nextInt(24), minute: random.nextInt(60));
-          TimeOfDay endTime = TimeOfDay(hour: random.nextInt(24), minute: random.nextInt(60));
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('faculties').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            // Show error dialog after a delay
+            _showErrorDialog(context, 'Error: ${snapshot.error}');
+            return Center(child: CircularProgressIndicator());
+          }
 
-          return FacultyStatusTile(
-            facultyName: facultyName,
-            designation: designation,
-            department: department,
-            isAvailable: isAvailable,
-            phoneNumber: phoneNumber,
-            email: email,
-            location: location,
-            startTime: startTime,
-            endTime: endTime,
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          List<DocumentSnapshot> documents = snapshot.data!.docs;
+
+          return ListView.builder(
+            itemCount: documents.length,
+            itemBuilder: (context, index) {
+              Map<String, dynamic> facultyData = documents[index].data() as Map<String, dynamic>;
+
+              return FacultyStatusTile(
+                facultyName: facultyData['displayName'] ?? 'Unknown',
+                isAvailable: facultyData['available'] ?? false,
+                phoneNumber: facultyData['phoneNumber'] ?? 'Not available',
+                email: facultyData['email'] ?? 'Not available',
+                location: facultyData['location'] ?? 'Unknown',
+                startTime: _parseTimeOfDay(facultyData['startTime']),
+                endTime: _parseTimeOfDay(facultyData['endTime']),
+              );
+            },
           );
         },
       ),
     );
   }
 
+  TimeOfDay _parseTimeOfDay(String? timeString) {
+    if (timeString == null || !timeString.startsWith('TimeOfDay(')) {
+      return TimeOfDay(hour: 0, minute: 0); // Default value if parsing fails
+    }
+    try {
+      String trimmed = timeString.replaceAll('TimeOfDay(', '').replaceAll(')', '');
+      List<String> components = trimmed.split(':');
+      int hour = int.parse(components[0]);
+      int minute = int.parse(components[1]);
+      return TimeOfDay(hour: hour, minute: minute);
+    } catch (e) {
+      print('Error parsing TimeOfDay: $e');
+      return TimeOfDay(hour: 0, minute: 0); // Default value if parsing fails
+    }
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    Future.delayed(Duration(seconds: 4), () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    });
+  }
 }
 
 class FacultyStatusTile extends StatelessWidget {
   final String facultyName;
-  final String designation;
-  final String department;
   final bool isAvailable;
   final String phoneNumber;
   final String email;
@@ -76,8 +98,6 @@ class FacultyStatusTile extends StatelessWidget {
   const FacultyStatusTile({
     Key? key,
     required this.facultyName,
-    required this.designation,
-    required this.department,
     required this.isAvailable,
     required this.phoneNumber,
     required this.email,
@@ -103,18 +123,20 @@ class FacultyStatusTile extends StatelessWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Designation: $designation'),
-          Text('Department: $department'),
           Text('Available: ${isAvailable ? 'Yes' : 'No'}'),
           Text('Phone: $phoneNumber'),
           Text('Email: $email'),
           Text('Location: $location'),
-          Text('Time: ${startTime.format(context)} - ${endTime.format(context)}'),
+          Text('Time: ${_formatTime(startTime)} - ${_formatTime(endTime)}'),
         ],
       ),
-      onTap: () {
-        // Add onTap functionality if needed
-      },
     );
+  }
+
+  String _formatTime(TimeOfDay timeOfDay) {
+    final now = DateTime.now();
+    final time = TimeOfDay(hour: timeOfDay.hour, minute: timeOfDay.minute);
+    final dateTime = DateTime(now.year, now.month, now.day, time.hour, time.minute);
+    return DateFormat.jm().format(dateTime);
   }
 }
